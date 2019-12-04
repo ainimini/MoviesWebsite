@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>咖啡猫影视登陆</title>
+    <!--用百度的静态资源库的cdn安装bootstrap环境-->
+    <!-- Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--font-awesome 核心我CSS 文件-->
+    <!-- <link href="https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- 在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--angular-->
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+
+    <script src="../js/login.js"></script>
+    <!--jquery.validate-->
+    <style type="text/css">
+        body {
+            background-image: url("../images/background.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-size: 16px;
+        }
+
+        .form {
+            background: rgba(255, 255, 255, 0.2);
+            width: 400px;
+            margin: 100px auto;
+        }
+
+        #login_form {
+            display: block;
+        }
+
+        #register_form {
+            display: none;
+        }
+
+        .fa {
+            display: inline-block;
+            top: 27px;
+            left: 1px;
+            position: relative;
+            color: #ccc;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding-left: 26px;
+        }
+
+        .checkbox {
+            padding-left: 21px;
+        }
+    </style>
+</head>
+<body ng-app=""><!--ng-controller="addCtrl"-->
+<!--
+    基础知识：
+    网格系统:通过行和列布局
+    行必须放在container内
+    手机用col-xs-*
+    平板用col-sm-*
+    笔记本或普通台式电脑用col-md-*
+    大型设备台式电脑用col-lg-*
+    为了兼容多个设备，可以用多个col-*-*来控制；
+-->
+<!--注册-->
+<div class="container" aria-hidden="true">
+
+    <div class="form row">
+        <form class="form-horizontal col-sm-offset-3 col-md-offset-3" name="myForm" action="/registers" method="post"
+              style="margin-left: 23px; margin-right: 23px;"
+              novalidate="novalidate">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>-->
+                <h3 class="modal-title" id="myModalLabel" align="center">
+                    注册
+                </h3>
+            </div>
+            <!--用户框-->
+            <div class="form-group">
+                <i class="fa fa-user fa-lg"></i>
+                <input class="form-control required" type="text" placeholder="Username" name="username" id="username"
+                       autofocus="autofocus" required="required" ng-model="username"/>
+                <span style="color:red" ng-show="myForm.username.$dirty && myForm.username.$invalid">
+								<span ng-show="myForm.username.$error.required">用户名不能为空！</span>
+								</span>
+            </div>
+            <!--密码框-->
+            <div class="form-group">
+                <i class="fa fa-user fa-lg"></i>
+                <input class="form-control required" type="password" placeholder="Password" name="password"
+                       autofocus="autofocus" required="required" ng-model="password" maxlength="20" id="password"/>
+                <span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+							<span ng-show="myForm.password.$error.required">密码不能为空！</span>
+						</span>
+            </div>
+            <!--记住密码-->
+            <div class="form-group">
+                <i class="fa fa-check fa-lg"></i>
+                <input class="form-control required" type="password" placeholder="Re-type Your Password"
+                       name="repassword" ng-model="repassword"/>
+                <span style="color: red" ng-show="myForm.password.$valid">
+                        		<span ng-show="repassword!=password">两次密码输入不一致！</span>
+                    			</span>
+
+            </div>
+            <!--邮箱-->
+            <div class="form-group">
+                <i class="fa fa-envelope fa-lg"></i>
+                <input class="form-control eamil" type="text" placeholder="Email" name="email" ng-model="email" id="email"
+                       autofocus="autofocus" required="required"/>
+                <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+								<span ng-show="myForm.email.$error.required">邮箱不能为空！</span>
+                    <!--<span ng-show="myForm.email.$error.email">非法的邮箱地址。</span>-->
+								</span>
+            </div>
+            <!--登陆按钮-->
+            <div class="form-group">
+                <input type="submit" class="btn btn-success btn-primary btn-lg btn-block " value="注册 "
+                       ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||
+myForm.email.$dirty && myForm.email.$invalid" ng-click="doAdd()" value="add"/>
+            </div>
+            <div class="pull-right">已有有账号？点我<a href="login.html">登陆</a></div>
+        </form>
+    </div>
+</div>
+</body>
+
+<!--<script>
+    (function (window) {
+        window.angular.module('add', [])
+            .controller('addCtrl', function ($scope, $http) {
+                $scope.doAdd = function () {
+                    var data = JSON.stringify({
+                        username: $scope.username,
+                        password: $scope.password,
+                        email: $scope.email
+                    });
+                    $http.post("/reg", data)
+                        .then(function (res) {
+                            if(res.data.success) {
+                                $scope.msg = '添加成功';
+                                window.load().href="index.html"
+                            } else {
+                                $scope.msg = '添加失败';
+                            }
+                        }, function (err) {
+                            $scope.msg = err.data;
+                        });
+                }
+            });
+    })(window);
+</script>-->
+</html>

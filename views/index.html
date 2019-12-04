@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>咖啡猫影视</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--angular-->
+    <script src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+    <!--电影json数据-->
+    <!--<script src="js/data.js"></script>-->
+    <!--&lt;!&ndash; Custom-Files &ndash;&gt;
+    <link rel="stylesheet" href="css/bootstrap.css">-->
+    <!-- Bootstrap-Core-CSS -->
+    <link href="../css/css_slider.css" type="text/css" rel="stylesheet" media="all">
+    <!-- banner slider -->
+    <link rel="stylesheet" href="../css/style.css" type="text/css" media="all"/>
+    <!-- Style-CSS -->
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //Custom-Files -->
+
+    <!-- Web-Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Srisakdi:400,700&amp;subset=latin-ext,thai,vietnamese"
+          rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext"
+          rel="stylesheet">
+</head>
+<body ng-app="myApp" ng-controller="siteMovies">
+<!--导航栏-->
+<nav class="navbar navbar-default" role="navigation">
+    <a class="navbar-brand text-center" href="#"><img src="../images/login.png" alt=""
+                                                      style="width: 50px;height: 50px;"></a>
+    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">首页</a></li>
+            <li><a href="#">电影</a></li>
+            <li><a href="#">系列</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">我的 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">爱吃芒果的西瓜</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">我的关注</a></li>
+                    <li><a href="#">我的收藏</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">资料与账号</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">退出</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div>
+            <form class="navbar-form pull-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">提交</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!--轮播图-->
+<div class="banner_w3lspvt" id="myCarousel">
+    <div class="csslider infinity" id="slider1">
+        <input type="radio" name="slides" id="slides_1"/>
+        <input type="radio" name="slides" checked="checked" id="slides_2"/>
+        <input type="radio" name="slides" id="slides_3"/>
+        <ul class="banner_slide_bg">
+            <li>
+                <div class="container">
+                    <div class="w3ls_banner_txt">
+                        <h5>阿拉丁神灯</h5>
+                        <h3 class="w3ls_pvt-title"> Aladdin and the magic lamp</h3>
+                        <a href="#contact" style="max-width: 150px;" class="btn button-style mt-sm-5 mt-4">观赏影片</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="container">
+                    <div class="w3ls_banner_txt">
+                        <h5>驯龙高手</h5>
+                        <h3 class="w3ls_pvt-title">How to Train Your Dragon</h3>
+                        <a href="#contact" style="max-width: 150px;" class="btn button-style mt-sm-5 mt-4">观赏影片</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="container">
+                    <div class="w3ls_banner_txt">
+                        <h5>变形金刚</h5>
+                        <h3 class="w3ls_pvt-title">Transformers</h3>
+                        <a href="#contact" style="max-width: 150px;" class="btn button-style mt-sm-5 mt-4">观赏影片</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="navigation">
+            <div>
+                <label for="slides_1"></label>
+                <label for="slides_2"></label>
+                <label for="slides_3"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<!--内容列表-->
+<div id="background">
+    <!--科幻-->
+    <div class="gallery py-5" id="gallery">
+        <div class="container py-xl-5 py-lg-3">
+            <div class="title text-center mb-5">
+                <h3 class="mb-2">科幻</h3>
+                <p>Science Fiction Movie</p>
+            </div>
+            <div class="news-grids gal text-center">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3" ng-repeat="k in kmovies">
+                        <div class="thumbnail">
+                            <!--隐藏显示-->
+                            <div class="cent"><a href="#"><img ng-src="{{k.maxImage}}" alt="通用的占位符缩略图"></a>
+                                <div class="cs shadow" style="height: 390px">
+                                    <div><img ng-src="{{k.minImage}}" width="272" height="201"/></div>
+                                    <div style="text-decoration:underline; font-size:25px;text-align: left;padding-left: 6px">
+                                        <a href="#">{{k.name}}</a></div>
+                                    <div style="text-align: left;padding-left: 6px">简介：{{k.synopsis}}</div>
+                                    <br>
+                                    <div id="cs-button">
+                                        <span class="pull-left" style="padding-left: 6px"><a href="{{k.url}}"><button type="button"
+                                                                                                                      class="btn btn-info">立即观看</button></a></span>
+                                        <span class="glyphicon glyphicon-save btn-lg pull-right" role="button"></span>
+                                        <span class="glyphicon glyphicon-heart-empty btn-lg pull-right"
+                                              role="button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <a href="#" style="color: black" class="color"><h3>{{k.name}}</h3></a>
+                                <p>主演：{{k.actor}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="pull-right" data-toggle="tooltip" title="观赏更多影视"><a href="#">more<span
+                        class="glyphicon glyphicon-menu-right" data-toggle="tooltip" title="观赏更多影视"
+                        role="button"></span></a></div>
+            </div>
+        </div>
+    </div>
+    <!--感情-->
+    <div class="gallery py-5" id="gallery">
+        <div class="container py-xl-5 py-lg-3">
+            <div class="title text-center mb-5">
+                <h3 class="mb-2">感情</h3>
+                <p>Emotion Movie</p>
+            </div>
+            <div class="news-grids gal text-center">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3" ng-repeat="g in gmovies">
+                        <div class="thumbnail">
+
+                            <!--隐藏显示-->
+                            <div class="cent"><a href="#"><img ng-src="{{g.maxImage}}" alt="通用的占位符缩略图"></a>
+                                <div class="cs shadow" style="height: 390px">
+                                    <div><img ng-src="{{g.minImage}}" width="272" height="201"/></div>
+                                    <div style="text-decoration:underline; font-size:25px;text-align: left;padding-left: 6px">
+                                        <a href="#">{{g.name}}</a></div>
+                                    <div style="text-align: left;padding-left: 6px">简介：{{g.synopsis}}</div>
+                                    <br>
+                                    <div id="cs-button">
+                                        <span class="pull-left" style="padding-left: 6px"><button type="button"
+                                                                                                  class="btn btn-info">立即观看</button></span>
+                                        <span class="glyphicon glyphicon-save btn-lg pull-right" role="button"></span>
+                                        <span class="glyphicon glyphicon-heart-empty btn-lg pull-right"
+                                              role="button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <a href="#" style="color: black" class="color"><h3>{{g.name}}</h3></a>
+                                <p>主演：{{g.actor}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="pull-right" data-toggle="tooltip" title="观赏更多影视"><a href="#">more<span
+                        class="glyphicon glyphicon-menu-right" data-toggle="tooltip" title="观赏更多影视"
+                        role="button"></span></a></div>
+            </div>
+        </div>
+    </div>
+    <!--喜剧-->
+    <div class="gallery py-5" id="galle">
+        <div class="container py-xl-5 py-lg-3">
+            <div class="title text-center mb-5">
+                <h3 class="mb-2">喜剧</h3>
+                <p>Comedy Movie</p>
+            </div>
+            <div class="news-grids gal text-center">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3" ng-repeat="x in xmovies">
+                        <div class="thumbnail">
+                            <!--隐藏显示-->
+                            <div class="cent"><a href="#"><img ng-src="{{x.maxImage}}" alt="通用的占位符缩略图"></a>
+                                <div class="cs shadow" style="height: 390px">
+                                    <div><img ng-src="{{x.minImage}}" width="272" height="201"/></div>
+                                    <div style="text-decoration:underline; font-size:25px;text-align: left;padding-left: 6px">
+                                        <a href="#">{{x.name}}</a></div>
+                                    <div style="text-align: left;padding-left: 6px">简介：{{x.synopsis}}</div>
+                                    <br>
+                                    <div id="cs-button">
+                                        <span class="pull-left" style="padding-left: 6px"><button type="button"
+                                                                                                  class="btn btn-info">立即观看</button></span>
+                                        <span class="glyphicon glyphicon-save btn-lg pull-right" role="button"></span>
+                                        <span class="glyphicon glyphicon-heart-empty btn-lg pull-right"
+                                              role="button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <a href="#" style="color: black" class="color"><h3>{{x.name}}</h3></a>
+                                <p>主演：{{x.actor}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right" data-toggle="tooltip" title="观赏更多影视"><a href="#">more<span
+                    class="glyphicon glyphicon-menu-right" data-toggle="tooltip" title="观赏更多影视"
+                    role="button"></span></a>
+            </div>
+        </div>
+    </div>
+    <!--动画-->
+    <div class="gallery py-5" id="gall">
+        <div class="container py-xl-5 py-lg-3">
+            <div class="title text-center mb-5">
+                <h3 class="mb-2">动画</h3>
+                <p>Animation Movie</p>
+            </div>
+            <div class="news-grids gal text-center">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3" ng-repeat="d in dmovies">
+                        <div class="thumbnail">
+                            <!--隐藏显示-->
+                            <div class="cent"><a href="#"><img ng-src="{{d.maxImage}}" alt="通用的占位符缩略图"></a>
+                                <div class="cs shadow" style="height: 390px">
+                                    <div><img ng-src="{{d.minImage}}" width="272" height="201"/></div>
+                                    <div style="text-decoration:underline; font-size:25px;text-align: left;padding-left: 6px">
+                                        <a href="#">{{d.name}}</a></div>
+                                    <div style="text-align: left;padding-left: 6px">简介：{{d.synopsis}}</div>
+                                    <br>
+                                    <div id="cs-button">
+                                        <span class="pull-left" style="padding-left: 6px"><button type="button"
+                                                                                                  class="btn btn-info">立即观看</button></span>
+                                        <span class="glyphicon glyphicon-save btn-lg pull-right" role="button"></span>
+                                        <span class="glyphicon glyphicon-heart-empty btn-lg pull-right"
+                                              role="button"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <a href="#" style="color: black" class="color"><h3>{{d.name}}</h3></a>
+                                <p>主演：{{d.actor}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-right" data-toggle="tooltip" title="观赏更多影视"><a href="#">more<span
+                    class="glyphicon glyphicon-menu-right" data-toggle="tooltip" title="观赏更多影视"
+                    role="button"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--</div>
+</div>-->
+<!-- footer -->
+<footer class="footer-emp-w3ls py-5">
+    <div class="copy-right-top text-center border-top mt-5">
+        <a href="#home" class="move-top text-center mt-3"></a>
+        <p class="copy-right text-center"> 粤网文[2017]6138-1456号 | 增值电信业务经营许可证：粤B2-20090059 | 粤公网安备 44030002000001号</p>
+        <p class="copy-right text-center"><a href="#">关于咖啡猫</a> | <a href="#"> About Coffer Cat</a> | <a
+                href="#">服务条款</a> | <a href="#">广告服务</a> | <a href="#">咖啡猫招聘</a> | <a href="#">客服中心</a> | <a href="#">网站导航</a>
+        </p>
+        <p class="copy-right text-center">Copyright © 1998 - 2019 Tencent. All Rights Reserved.</p>
+        <p class="copy-right text-center">咖啡猫公司 版权所有</p>
+    </div>
+</footer>
+<!--<script>
+    var app = angular.module('myApp', []);
+    app.controller('siteMovies', function ($scope, $http) {
+        //获取本地json资源文件
+        $http.get('http://127.0.0.1:8080/data').success(function (data) {
+            //浏览器console端口打印读取的数据
+            console.log(data.movies[0].k);
+            $scope.kmovies = data.movies[0].k;
+            $scope.gmovies = data.movies[0].g;
+            $scope.xmovies = data.movies[0].x;
+            $scope.dmovies = data.movies[0].d;
+        });
+    });
+</script>-->
+<script>
+    var app = angular.module('myApp', [])
+    //科幻
+    app.controller('siteMovies', function ($scope, $http) {
+        //获取服务器json资源文件
+        //科幻
+        $http.get('http://127.0.0.1:8080/k').then(function (data) {
+            $scope.kmovies = data.data;
+        });
+        //情感
+        $http.get('http://127.0.0.1:8080/g').then(function (data) {
+            $scope.gmovies = data.data;
+        });
+        //喜剧
+        $http.get('http://127.0.0.1:8080/x').then(function (data) {
+            $scope.xmovies = data.data;
+        });
+        //动画
+        $http.get('http://127.0.0.1:8080/d').then(function (data) {
+            $scope.dmovies = data.data;
+        });
+    });
+</script>
+</body>
+</html>
